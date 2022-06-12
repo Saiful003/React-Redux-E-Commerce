@@ -1,0 +1,9 @@
+.home__wrapper {
+}
+
+.home__wrapper > :first-child {
+  flex-basis: 75%;
+  border: 1px solid #ddd;
+  padding: 0px 1.5em 14px 1.5em;
+  align-self: start;
+}

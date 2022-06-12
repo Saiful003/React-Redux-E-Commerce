@@ -1,0 +1,19 @@
+.all__category {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .all__category {
+    display: none;
+  }
+}
+
+@media (min-width: 1200px) {
+  .all__category {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: center;
+    gap: 10px;
+  }
+}

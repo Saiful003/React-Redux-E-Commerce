@@ -1,0 +1,7 @@
+:root {
+  --fs-300: 0.8rem;
+  --fs-400: 0.9rem;
+}
+.total {
+  font-size: var(--fs-400);
+}

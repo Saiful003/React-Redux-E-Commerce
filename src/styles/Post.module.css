@@ -1,0 +1,12 @@
+.post__container {
+  max-width: 90%;
+  width: 590px;
+  margin: auto;
+  background: #fff;
+  padding: 28px 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+  margin-top: 5em;
+  border-radius: 10px;
+}

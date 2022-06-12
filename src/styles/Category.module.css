@@ -1,0 +1,16 @@
+.category__container {
+  padding: 0.89em 10px;
+  cursor: pointer;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.category__container:hover {
+  background: #fff;
+  box-shadow: 6px 0 8px -9px #333;
+}
+.title {
+  font-size: 0.92rem;
+  color: #878787;
+  margin-top: 10px;
+}

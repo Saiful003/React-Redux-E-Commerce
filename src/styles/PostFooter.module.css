@@ -1,0 +1,6 @@
+.post__footer__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-inline: 0.9em;
+}

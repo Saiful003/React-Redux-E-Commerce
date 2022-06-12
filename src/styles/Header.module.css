@@ -1,0 +1,16 @@
+header {
+  background: #f0f0f0;
+}
+.header__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2em;
+  padding: 18px 0;
+  margin-bottom: 2.5em;
+}
+
+@media (min-width: 768px) {
+  .header__wrapper {
+    padding-top: 18px;
+  }
+}

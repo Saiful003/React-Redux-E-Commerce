@@ -1,0 +1,19 @@
+:root {
+  --fs-300: 0.8rem;
+  --fs-400: 0.9rem;
+  --clr-off-gray: hsl(0, 0%, 50%);
+}
+
+.user__info {
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+}
+.user__name {
+  font-size: var(--fs-400);
+  font-weight: bold;
+}
+.user__occupation {
+  font-size: var(--fs-300);
+  color: var(--clr-off-gray);
+}

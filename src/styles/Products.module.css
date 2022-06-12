@@ -1,0 +1,14 @@
+.toast {
+  grid-column: span 4;
+  text-align: center;
+}
+.category__name {
+  padding: 10px 0;
+  border-bottom: 1px solid #3333;
+  margin-bottom: 1em;
+}
+.product__wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2em;
+}
