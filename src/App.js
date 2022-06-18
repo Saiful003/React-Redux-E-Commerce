@@ -18,7 +18,7 @@ function App() {
       <MyApp colors={colors}>
         <Layout>
           <Routes>
-            <Route path="/" element={<Home />} />
+            {/* <Route path="/" element={<Home />} /> */}
             <Route path="/cart" element={<Cart />} />
             <Route path="/product/:productId" element={<Detail />} />
             <Route path="/favourite" element={<Favourite />} />

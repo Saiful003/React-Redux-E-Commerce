@@ -5,6 +5,9 @@ import { useText } from "../hooks/useText";
 import { BsArrowRightShort } from "react-icons/bs";
 import { IconWrapper } from "../styled-component/common";
 import { useShop } from "../context/shoppingContext";
+import { AiFillHeart } from "react-icons/ai";
+import SingleIcon from "../components/SingleIcon";
+import { showToastHandler } from "../utils/toastHandler";
 
 function Product(props) {
   const {
@@ -20,7 +23,7 @@ function Product(props) {
 
   const shortedText = useText(productTitle);
   const [isShortedText, setIsShortedText] = useState(true);
-  const { theme, isLightTheme } = useShop();
+  const { theme, isLightTheme, addFavourite, favourite } = useShop();
 
   return (
     <ProductContainer theme={theme}>
@@ -61,9 +64,53 @@ function Product(props) {
           </IconWrapper>
         </PurchaseBtn>
       </Content>
+      <FavouriteBtnContainer
+        onClick={() => {
+          addFavourite({ ...props });
+          const fIndex = favourite.findIndex(
+            (item) => item.productId === productId
+          );
+          if (fIndex < 0) {
+            showToastHandler({
+              text: "Added to favourite!",
+              type: "success",
+            });
+          }
+          if (fIndex >= 0) {
+            showToastHandler({
+              text: "Already Added to favourite!",
+              type: "error",
+            });
+          }
+        }}
+      >
+        <SingleIcon onlyIcon icon={<AiFillHeart fill="red" size={23} />} />
+      </FavouriteBtnContainer>
     </ProductContainer>
   );
 }
+
+const FavouriteBtnContainer = styled.div`
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  aspect-ratio: 1;
+  width: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: hsl(133deg 100% 89%);
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:hover {
+    background: #00cc2c;
+  }
+
+  &:hover svg {
+    fill: white;
+  }
+`;
 
 const SeeBtn = styled.span`
   font-weight: 700;
@@ -82,6 +129,7 @@ const Wrapper = styled.div`
   margin-bottom: 15px;
 `;
 const ProductContainer = styled.div`
+  position: relative;
   border: ${(props) => {
     const { theme } = props;
     const { borderColor } = theme;

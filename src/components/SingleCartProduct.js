@@ -33,10 +33,6 @@ function SingleCartProduct(props) {
         <ButtonGroup>
           <IconContext.Provider value={{ size: 20, color: "#fff" }}>
             <Button
-              onClick={() => addProduct({ ...props })}
-              icon={<BsPlus />}
-            />
-            <Button
               onClick={() => {
                 if (quantity === 1) {
                   showToastHandler({
@@ -48,6 +44,10 @@ function SingleCartProduct(props) {
                 }
               }}
               icon={<HiOutlineMinusSm />}
+            />
+            <Button
+              onClick={() => addProduct({ ...props })}
+              icon={<BsPlus />}
             />
             <Button
               onClick={() => {
