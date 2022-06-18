@@ -1,14 +1,25 @@
-import React from "react";
-import CartPage from "../components/CartPage";
+import styled from "styled-components";
 import Products from "../components/Products";
-import styles from "../styles/Home.module.css";
+import Title from "../components/Title";
+import { useShop } from "../context/shoppingContext";
 
 function Home() {
+  const { theme } = useShop();
   return (
-    <div className={styles.home__wrapper}>
+    <HomeWrapper theme={theme}>
+      <Title>All Products</Title>
       <Products />
-    </div>
+    </HomeWrapper>
   );
 }
+
+const HomeWrapper = styled.div`
+  border: ${(props) => {
+    const { theme } = props;
+    const { borderColor } = theme;
+    return `1px solid ${borderColor}`;
+  }};
+  padding: 10px 20px;
+`;
 
 export default Home;

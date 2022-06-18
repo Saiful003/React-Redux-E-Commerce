@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Avatar from "./Avatar";
 import userImg from "../assests/images/70336555_603062176765125_1923183396192780288_n.jpg";
 import styles from "../styles/UserIdentity.module.css";

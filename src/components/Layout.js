@@ -1,12 +1,11 @@
-import React from "react";
 import Header from "./Header";
-
+import { Container } from "../styled-component/common";
 function Layout({ children }) {
   return (
     <>
       <Header />
       <main>
-        <div className="container">{children}</div>
+        <Container>{children}</Container>
       </main>
     </>
   );

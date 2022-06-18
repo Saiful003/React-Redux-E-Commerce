@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "../styles/IconHolder.module.css";
 
 function IconHolder({ style, children, ...rest }) {

@@ -7,7 +7,6 @@ export const ACTIONS = {
   DELETE_PRODUCT: "deleteProduct",
   INPUT_HANDLER: "inputHandler",
   CLEAR: "clear",
-  CATEGORY_SEARCH: "searchProductAccordingToCategory",
   DELETE_CART: "deleteCart",
   CHANGE_THEME: "changeTheme",
 };
@@ -17,7 +16,6 @@ export const initialState = {
   favourite: [],
   products: [...allProducts],
   inputValue: "",
-  categoryName: null,
   isLightTheme: true,
 };
 
@@ -135,23 +133,6 @@ export function reducer(state, action) {
     }
     case ACTIONS.CLEAR: {
       return { ...state, inputValue: "" };
-    }
-    case ACTIONS.CATEGORY_SEARCH: {
-      if (action.payload === "Home") {
-        return {
-          ...state,
-          products: allProducts,
-          categoryName: "All Products",
-        };
-      }
-      const filteredProducts = allProducts.filter(
-        (product) => product.category === action.payload
-      );
-      return {
-        ...state,
-        products: filteredProducts,
-        categoryName: action.payload,
-      };
     }
     case ACTIONS.DELETE_CART: {
       const newProducts = [...state.products];

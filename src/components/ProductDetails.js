@@ -1,25 +1,28 @@
-import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import { FiShoppingBag } from "react-icons/fi";
-import { IconContext } from "react-icons/lib";
+import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useShop } from "../context/shoppingContext";
-import IconHolder from "./IconHolder";
+import Title from "../components/Title";
+import { IconWrapper } from "../styled-component/common";
+import { BsCartFill } from "react-icons/bs";
+import Button from "../components/Button";
+import { BsPlus } from "react-icons/bs";
+import { HiOutlineMinusSm } from "react-icons/hi";
+import { IconContext } from "react-icons/lib";
+import { showToastHandler } from "../utils/toastHandler";
 
 function ProductDetails() {
   const { productId: id } = useParams();
-  const { products, addProduct, deleteProduct, decreaseProductQuantity } =
-    useShop();
+  const {
+    products,
+    addProduct,
+    decreaseProductQuantity,
+    deleteProduct,
+    theme,
+  } = useShop();
 
-  // functions
-  function findProduct() {
-    const productArr = [];
-    const obj = products.find((product) => product.productId === id);
-    productArr.push(obj);
-    return productArr;
-  }
   function decrease() {
-    const { quantity } = findProduct()[0];
+    const { quantity } = getProduct()[0];
     if (quantity === 1) {
       deleteProduct(id);
     } else {
@@ -27,71 +30,112 @@ function ProductDetails() {
     }
   }
 
+  function getProduct() {
+    const productArr = [];
+    const productObj = products.find((product) => product.productId === id);
+    productArr.push(productObj);
+    return productArr;
+  }
+
   return (
-    <>
-      {findProduct().map((product) => {
-        const { productTitle, productId, productImage, category, quantity } =
-          product;
+    <div>
+      {getProduct().map((product) => {
+        const {
+          productId,
+          productImage,
+          productOfferPrice,
+          productOldPrice,
+          productTitle,
+          productVendorCode,
+          category,
+          quantity,
+        } = product;
         return (
-          <ProductWrapper key={productId}>
+          <Container theme={theme}>
             <ProductImage>
-              <img src={productImage} alt="" />
+              <Image src={productImage} />
             </ProductImage>
-            <Details>
-              <Category>{`Category : ${category}`}</Category>
-              <Title>
-                {productTitle.substring(0, 40).trim().concat("...")}
-              </Title>
-              {quantity >= 1 ? (
-                <ButtonContainer>
-                  <IconContext.Provider
-                    value={{ style: { cursor: "pointer" }, color: "#fff" }}
-                  >
-                    <AiOutlineMinus onClick={decrease} />
-                    <span> {quantity} </span>
-                    <AiOutlinePlus onClick={() => addProduct({ ...product })} />
-                  </IconContext.Provider>
-                </ButtonContainer>
-              ) : (
-                <IconHolder onClick={() => addProduct({ ...product })}>
-                  <FiShoppingBag fontSize={22} color="#fff" />
-                </IconHolder>
-              )}
-            </Details>
-          </ProductWrapper>
+            <div>
+              <ProductDesc>
+                <Title>{productTitle}</Title>
+                <div>
+                  {quantity >= 1 ? (
+                    <ButtonGroup>
+                      <IconContext.Provider value={{ size: 20, color: "#fff" }}>
+                        <Button
+                          onClick={decrease}
+                          icon={<HiOutlineMinusSm />}
+                        />
+                        <span> {quantity} </span>
+                        <Button
+                          onClick={() => addProduct({ ...product })}
+                          icon={<BsPlus />}
+                        />
+                      </IconContext.Provider>
+                    </ButtonGroup>
+                  ) : (
+                    <AdcButton
+                      onClick={() => {
+                        addProduct({ ...product });
+                        showToastHandler({
+                          text: "Added to cart!",
+                          type: "success",
+                        });
+                      }}
+                    >
+                      <div>Add To Cart</div>
+                      <IconWrapper>
+                        <BsCartFill size={20} />
+                      </IconWrapper>
+                    </AdcButton>
+                  )}
+                </div>
+              </ProductDesc>
+            </div>
+          </Container>
         );
       })}
-    </>
+    </div>
   );
 }
 
-const ButtonContainer = styled.div`
+const Container = styled.div`
   display: flex;
   width: max-content;
-  padding: 5px 12px;
-  gap: 1em;
+  border: ${(props) => {
+    const { theme } = props;
+    const { borderColor } = theme;
+    return `1px solid ${borderColor}`;
+  }};
+
+  gap: 1.5em;
+`;
+const Image = styled.img``;
+const ProductImage = styled.div``;
+const ProductDesc = styled.div`
+  padding: 10px 0;
+  max-width: 700px;
+`;
+const AdcButton = styled.a`
+  display: flex;
   align-items: center;
-  background-color: hsl(21deg 100% 56%);
+  width: max-content;
+  padding: 10px 12px;
+  gap: 0.6em;
+  cursor: pointer;
+  color: #fff;
+  background-color: hsl(133deg 100% 40%);
+  font-weight: 700;
   border-radius: 5px;
-  margin-top: 1em;
-  & span {
-    color: #fff;
-    user-select: none;
+  transition: all 200ms ease;
+  &:hover {
+    background-color: hsl(133deg 100% 35%);
   }
 `;
-
-const ProductWrapper = styled.div`
+const ButtonGroup = styled.div`
   display: flex;
-  gap: 2em;
+  align-items: center;
+  gap: 0.6em;
 `;
-const ProductImage = styled.div`
-  width: 50%;
-`;
-const Details = styled.div`
-  flex-grow: 1;
-`;
-const Title = styled.h2``;
-
-const Category = styled.h2``;
 
 export default ProductDetails;

@@ -9,16 +9,24 @@ export function useShop() {
 
 export function ShoppingContextProvider({ children }) {
   // useReducer hook ==> the magic
-  const [
-    { cart, favourite, products, inputValue, categoryName, isLightTheme },
-    dispatch,
-  ] = useReducer(reducer, initialState);
+  const [{ cart, favourite, products, inputValue, isLightTheme }, dispatch] =
+    useReducer(reducer, initialState);
 
   // color object
 
   const theme = isLightTheme
-    ? { primaryColor: "red", secondaryColor: "blue" }
-    : { primaryColor: "green", secondaryColor: "yellow" };
+    ? {
+        primaryColor: "hsl(133deg 100% 40%)",
+        textColor: "#444",
+        bodyColor: "#fff",
+        borderColor: "#ddd",
+      }
+    : {
+        primaryColor: "hsl(0deg 0% 11%)",
+        textColor: "#fff",
+        bodyColor: "hsl(0deg 0% 21%)",
+        borderColor: "#464646",
+      };
 
   //add product;
   function addProduct(product) {
@@ -88,11 +96,8 @@ export function ShoppingContextProvider({ children }) {
   }
   // clear serach field
   function clearSerachField() {
+    console.log("Hello");
     dispatch({ type: ACTIONS.CLEAR });
-  }
-  //  search product according to category
-  function searchProductAccordingToCategory(categoryName) {
-    dispatch({ type: ACTIONS.CATEGORY_SEARCH, payload: categoryName });
   }
 
   function handleDeleteCart() {
@@ -113,16 +118,15 @@ export function ShoppingContextProvider({ children }) {
     handleInputChange,
     handleFilterProduct,
     clearSerachField,
-    searchProductAccordingToCategory,
     getTotalQuantity,
     handleDeleteCart,
+    switchThemeHandler,
     products,
     favourite,
     cart,
     inputValue,
-    categoryName,
     theme,
-    switchThemeHandler,
+    isLightTheme,
   };
 
   return (

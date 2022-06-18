@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "../styles/PostFooter.module.css";
 
 function PostFooter({ children }) {

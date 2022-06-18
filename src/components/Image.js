@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "../styles/Image.module.css";
 
 function Image({ img }) {

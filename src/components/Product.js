@@ -1,110 +1,156 @@
-import React, { useState } from "react";
-import { AiOutlineHeart, AiOutlineMinus } from "react-icons/ai";
-import { BsArrowRightShort, BsPlus } from "react-icons/bs";
-import { FiShoppingBag } from "react-icons/fi";
-import { useShop } from "../context/shoppingContext";
-import styles from "../styles/Product.module.css";
-import ButtonGroup from "./ButtonGroup";
-import IconHolder from "./IconHolder";
-import IconWrapper from "./IconWrapper";
-import Image from "./Image";
-import SeeButton from "./SeeButton";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useText } from "../hooks/useText";
+import { BsArrowRightShort } from "react-icons/bs";
+import { IconWrapper } from "../styled-component/common";
+import { useShop } from "../context/shoppingContext";
 
 function Product(props) {
   const {
-    productTitle,
+    productId,
     productImage,
     productOfferPrice,
     productOldPrice,
+    productTitle,
     productVendorCode,
-    productId,
+    category,
+    quantity,
   } = props;
 
-  const { addFavourite } = useShop();
-  const [isCuttedText, setIsCuttedText] = useState(true);
+  const shortedText = useText(productTitle);
+  const [isShortedText, setIsShortedText] = useState(true);
+  const { theme, isLightTheme } = useShop();
 
   return (
-    <div className={styles.product__container}>
-      <div className={styles.product__img}>
-        <Image img={productImage} />
-      </div>
-      <div className={styles.product__details}>
-        <p
-          className={styles.product__vendor__code}
-        >{`Vendor code : ${productVendorCode}`}</p>
-        <h2 className={styles.product__title}>
-          {isCuttedText ? (
+    <ProductContainer theme={theme}>
+      <ProductImage>
+        <Image src={productImage} />
+      </ProductImage>
+      <Content isLightTheme={isLightTheme}>
+        <ProductCode>{`Vendor code : ${productVendorCode}`}</ProductCode>
+        <ProductDesc theme={theme}>
+          {isShortedText ? (
             <>
-              {productTitle.substring(0, 40).trim().concat("... ")}
-              <SeeButton
-                className="see__more"
-                onClick={() => setIsCuttedText((prevState) => !prevState)}
-              >
-                See more
-              </SeeButton>
+              {shortedText}
+              <SeeBtn onClick={() => setIsShortedText(false)}>See more</SeeBtn>
             </>
           ) : (
             <>
               {productTitle}
-              {"\u00A0"}
-              <SeeButton
-                className="see__less"
-                onClick={() => setIsCuttedText((prevState) => !prevState)}
-              >
-                See less
-              </SeeButton>
+              &nbsp;
+              <SeeBtn onClick={() => setIsShortedText(true)}>See less</SeeBtn>
             </>
           )}
-        </h2>
-        <p className={styles.price__tag}>Price :</p>
-        <div className={styles.product__footer}>
-          <div>
-            <div className={styles.offer__price}>
-              <h2>{`$${productOfferPrice}`}</h2>
-              <span className={styles.old__price}>{productOldPrice}</span>
-            </div>
-          </div>
-        </div>
-        <Wrapper to={`/product/${productId}`}>
-          <p>Purchase from here</p>
-          <IconWrapper>
-            <BsArrowRightShort size={25} />
-          </IconWrapper>
-        </Wrapper>
-      </div>
-      <div className={styles.love__icon}>
-        <IconHolder
-          onClick={() => addFavourite({ ...props })}
-          style={{ background: `hsl(0deg 0% 96%)`, border: `1px solid #ddd` }}
+        </ProductDesc>
+        <PriceSection theme={theme}>
+          <PricePlaceHolder theme={theme}>Price : </PricePlaceHolder>
+          <Wrapper>
+            <ProductOfferPrice> {productOfferPrice} </ProductOfferPrice>
+            <ProductRegularPrice> {productOldPrice} </ProductRegularPrice>
+          </Wrapper>
+        </PriceSection>
+        <PurchaseBtn
+          isLightTheme={isLightTheme}
+          theme={theme}
+          to={`/product/${productId}`}
         >
-          <AiOutlineHeart fontSize={22} />
-        </IconHolder>
-      </div>
-    </div>
+          <div>Purchase from here</div>
+          <IconWrapper>
+            <BsArrowRightShort fontSize={25} />
+          </IconWrapper>
+        </PurchaseBtn>
+      </Content>
+    </ProductContainer>
   );
 }
-const Wrapper = styled(Link)`
+
+const SeeBtn = styled.span`
+  font-weight: 700;
+  color: hsl(133deg 100% 40%);
+  cursor: pointer;
+  font-size: 16px;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  padding: 8px 12px;
-  border-radius: 5px;
-  border: 1px solid hsl(21deg 100% 56%);
-  gap: 5px;
-  cursor: pointer;
+  gap: 0.5em;
+  margin-bottom: 15px;
+`;
+const ProductContainer = styled.div`
+  border: ${(props) => {
+    const { theme } = props;
+    const { borderColor } = theme;
+    return `1px solid ${borderColor}`;
+  }};
+  align-self: flex-start;
+`;
+export const ProductImage = styled.div``;
+const Image = styled.img`
+  aspect-ratio: 3 / 2;
+`;
+const Content = styled.div`
+  background-color: ${({ isLightTheme }) =>
+    isLightTheme ? "#fff" : "hsl(0deg 0% 18%)"};
+  padding: 20px 15px;
+`;
+const ProductCode = styled.p`
+  color: #898989;
+  margin-bottom: 15px;
+`;
+const ProductDesc = styled.p`
+  color: ${({ theme }) => {
+    const { textColor } = theme;
+    return textColor;
+  }};
+  margin-bottom: 15px;
+`;
+const PriceSection = styled.div`
+  color: ${({ theme }) => {
+    const { textColor } = theme;
+    return textColor;
+  }};
+`;
+const PurchaseBtn = styled(Link)`
+  display: flex;
+  gap: 0.3em;
   width: max-content;
-  font-weight: bold;
-  transition: background-color 200ms ease-in;
-  margin-top: 1em;
-  &:hover a {
-    color: #fff;
-  }
+  text-decoration: none;
+  border: 1px solid hsl(133deg 100% 40%);
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: 700;
+  color: ${({ theme }) => {
+    const { textColor } = theme;
+    return textColor;
+  }};
+  transition: all 100ms ease;
   &:hover {
+    background-color: hsl(133deg 100% 40%);
     color: #fff;
-    background-color: hsl(21deg 100% 56%);
-    border: 1px solid #fff;
+    border: ${({ isLightTheme }) => {
+      return isLightTheme ? "1px solid #fff" : "1px solid hsl(133deg 100% 40%)";
+    }};
   }
+`;
+
+const PricePlaceHolder = styled.p`
+  color: ${({ theme }) => {
+    const { textColor } = theme;
+    return textColor;
+  }};
+  font-weight: bold;
+  font-size: 1.2rem;
+`;
+const ProductOfferPrice = styled.h2``;
+const ProductRegularPrice = styled.p`
+  font-size: 1.1rem;
+  color: #a7a7a7;
+  text-decoration: line-through;
 `;
 
 export default Product;

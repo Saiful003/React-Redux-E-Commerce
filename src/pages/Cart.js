@@ -1,11 +1,13 @@
 import React from "react";
+import styled from "styled-components";
 import CartPage from "../components/CartPage";
 import PageTitle from "../components/PageTitle";
+import Title from "../components/Title";
 
 function Cart() {
   return (
     <>
-      <PageTitle title="All of your product lists" />
+      <Title>All of your products list</Title>
       <CartPage />
     </>
   );
