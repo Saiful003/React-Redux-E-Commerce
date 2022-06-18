@@ -11,7 +11,6 @@ export function ShoppingContextProvider({ children }) {
   // useReducer hook ==> the magic
   const [{ cart, favourite, products, inputValue, isLightTheme }, dispatch] =
     useReducer(reducer, initialState);
-  console.log(cart);
 
   // color object
 
