@@ -3,11 +3,11 @@ import { useForm } from "react-hook-form";
 import InputField from "../components/Form/InputField";
 import { FormWrapper, FormContainer } from "../styled-component/common";
 import AuthBtn from "../components/Form/AuthBtn";
-import FormFooter from "../components/Form/FormFooter";
 import FormTitle from "../components/Form/FormTitle";
 import FormFooterText from "../components/Form/FormFooterText";
 import { showToastHandler } from "../utils/toastHandler";
 import photo from "../assests/undraw_account_re_o7id.svg";
+import FormFooter from "../components/Form/FormFooter";
 
 function SignIn() {
   const {

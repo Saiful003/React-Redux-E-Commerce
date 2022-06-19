@@ -53,14 +53,14 @@ function Header() {
             </InputWrapper>
           </InputArea>
           <RightHeader>
-            <IconContainer>
-              <IconContext.Provider
-                value={{
-                  size: 23,
-                  color: "white",
-                  style: { cursor: "pointer" },
-                }}
-              >
+            <IconContext.Provider
+              value={{
+                size: 23,
+                color: "white",
+                style: { cursor: "pointer" },
+              }}
+            >
+              <IconContainer>
                 <SingleIcon route="signin" icon={<VscSignIn />} />
                 <SingleIcon
                   onlyIcon
@@ -76,8 +76,8 @@ function Header() {
                 <SingleIcon route="cart" icon={<AiOutlineShoppingCart />}>
                   <Quantity cart={cart}> {cart.length} </Quantity>
                 </SingleIcon>
-              </IconContext.Provider>
-            </IconContainer>
+              </IconContainer>
+            </IconContext.Provider>
           </RightHeader>
         </HeaderWrapper>
       </Container>
@@ -107,8 +107,16 @@ const CrossIcon = styled.div`
 `;
 
 const InputWrapper = styled.div`
-  width: 450px;
   position: relative;
+  @media only screen and (min-width: 640px) {
+    width: 450px;
+  }
+  @media only screen and (min-width: 768px) {
+    width: 400px;
+  }
+  @media only screen and (min-width: 1024px) {
+    width: 450px;
+  }
 `;
 const Quantity = styled.span`
   position: absolute;
@@ -148,14 +156,35 @@ const HeaderContainer = styled.header`
   position: sticky;
   top: 0;
   z-index: 999;
+  @media only screen and (min-width: 640px) {
+    padding: 1em 0;
+  }
 `;
 const HeaderWrapper = styled.div`
   display: flex;
   align-items: center;
+  @media only screen and (min-width: 640px) {
+    flex-direction: column;
+    gap: 15px;
+  }
+  @media only screen and (min-width: 768px) {
+    flex-direction: row;
+  }
 `;
 const Logo = styled.div`
   padding: 1.1em 0;
-  margin-right: 1.89%;
+  margin-right: 1.89px;
+  flex-grow: 1;
+  @media only screen and (min-width: 640px) {
+    padding: 0;
+  }
+  @media only screen and (min-width: 768px) {
+    margin-right: 0;
+  }
+  @media only screen and (min-width: 1024px) {
+    flex-grow: 0;
+    margin-right: 1.89px;
+  }
 `;
 const LogoLink = styled(Link)`
   text-decoration: none;
@@ -164,7 +193,20 @@ const LogoLink = styled(Link)`
 `;
 
 const InputArea = styled.div`
-  flex-grow: 1;
+  display: none;
+  @media only screen and (min-width: 640px) {
+    display: block;
+  }
+  @media only screen and (min-width: 1024px) {
+    flex-grow: 1;
+  }
 `;
-const RightHeader = styled.div``;
+const RightHeader = styled.div`
+  @media only screen and (min-width: 768px) {
+    display: none;
+  }
+  @media only screen and (min-width: 1024px) {
+    display: block;
+  }
+`;
 export default Header;
