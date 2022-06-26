@@ -3,24 +3,45 @@ import SingleCartProduct from "./SingleCartProduct";
 import styled from "styled-components";
 
 function CartPage() {
-  const { cart, getTotalPrice, getTotalQuantity, theme } = useShop();
+  const { cart, getTotalPrice, getTotalQuantity, theme, handleDeleteCart } =
+    useShop();
   return (
-    <Wrapper theme={theme}>
-      {cart.length === 0 && (
-        <div>
-          <h3> No more products in your cart! </h3>
-        </div>
-      )}
-      {cart.map((product) => {
-        return <SingleCartProduct {...product} key={product.productId} />;
-      })}
-      <CartDetails theme={theme}>
-        <TotalPrice> Total Price : ${getTotalPrice()} </TotalPrice>
-        <TotalQuantity>Total Quantity : {getTotalQuantity()} </TotalQuantity>
-      </CartDetails>
-    </Wrapper>
+    <>
+      <Wrapper theme={theme}>
+        {cart.length === 0 && (
+          <div>
+            <h3> No more products in your cart! </h3>
+          </div>
+        )}
+        {cart.map((product) => {
+          return <SingleCartProduct {...product} key={product.productId} />;
+        })}
+        <CartDetails theme={theme}>
+          <TotalPrice> Total Price : ${getTotalPrice()} </TotalPrice>
+          <TotalQuantity>Total Quantity : {getTotalQuantity()} </TotalQuantity>
+        </CartDetails>
+        <DeleteButton onClick={handleDeleteCart}>
+          Delete all Products
+        </DeleteButton>
+      </Wrapper>
+    </>
   );
 }
+
+const DeleteButton = styled.a`
+  cursor: pointer;
+  align-self: flex-start;
+  padding: 10px 15px;
+  border-radius: 5px;
+  background-color: hsl(133deg 100% 40%);
+  transition: all 100ms ease-in;
+  color: #fff;
+  font-weight: 700;
+  &:hover {
+    transform: translate(3px, -3px);
+    background-color: hsl(133deg 100% 35%);
+  }
+`;
 
 const CartDetails = styled.div`
   border: ${(props) => {
