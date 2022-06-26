@@ -6,13 +6,13 @@ import Cart from "./pages/Cart";
 import Detail from "./pages/Detail";
 import Favourite from "./pages/Favourite";
 import { MyApp } from "./styled-component/MyApp";
-import { useShop } from "./context/shoppingContext";
 import SignIn from "./pages/SignIn";
 import { Toaster } from "react-hot-toast";
 import Login from "./pages/Login";
+import { useTheme } from "./hooks/useTheme";
 
 function App() {
-  const { theme: colors } = useShop();
+  const { theme: colors } = useTheme();
   return (
     <BrowserRouter>
       <MyApp colors={colors}>

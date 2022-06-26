@@ -1,7 +1,7 @@
-import { useShop } from "../context/shoppingContext";
+import { useFavourite } from "../hooks/useFavourite";
 
 function Favourite() {
-  const { favourite } = useShop();
+  const { favourite } = useFavourite();
   return (
     <>
       {favourite.map(({ productTitle }) => (

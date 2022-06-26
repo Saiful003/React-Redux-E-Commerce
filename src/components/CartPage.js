@@ -1,10 +1,11 @@
-import { useShop } from "../context/shoppingContext";
 import SingleCartProduct from "./SingleCartProduct";
 import styled from "styled-components";
+import { useCart } from "../hooks/useCart";
+import { useTheme } from "../hooks/useTheme";
 
 function CartPage() {
-  const { cart, getTotalPrice, getTotalQuantity, theme, handleDeleteCart } =
-    useShop();
+  const { cart, getTotalPrice, getTotalQuantity, handleDeleteCart } = useCart();
+  const { theme } = useTheme();
   return (
     <>
       <Wrapper theme={theme}>

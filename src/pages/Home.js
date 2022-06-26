@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import Products from "../components/Products";
 import Title from "../components/Title";
-import { useShop } from "../context/shoppingContext";
+import { useTheme } from "../hooks/useTheme";
 
 function Home() {
-  const { theme } = useShop();
+  const { theme } = useTheme();
   return (
     <HomeWrapper theme={theme}>
       <Title>All Products</Title>

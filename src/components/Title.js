@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { useShop } from "../context/shoppingContext";
+import { useTheme } from "../hooks/useTheme";
 
 function Title({ children }) {
-  const { theme } = useShop();
+  const { theme } = useTheme();
   return (
     <TitleWrapper theme={theme}>
       <h3> {children} </h3>

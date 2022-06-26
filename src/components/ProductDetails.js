@@ -1,7 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useShop } from "../context/shoppingContext";
 import Title from "../components/Title";
 import { IconWrapper } from "../styled-component/common";
 import { BsCartFill } from "react-icons/bs";
@@ -10,16 +9,15 @@ import { BsPlus } from "react-icons/bs";
 import { HiOutlineMinusSm } from "react-icons/hi";
 import { IconContext } from "react-icons/lib";
 import { showToastHandler } from "../utils/toastHandler";
+import { useCart } from "../hooks/useCart";
+import { useProducts } from "../hooks/useProducts";
+import { useTheme } from "../hooks/useTheme";
 
 function ProductDetails() {
   const { productId: id } = useParams();
-  const {
-    products,
-    addProduct,
-    decreaseProductQuantity,
-    deleteProduct,
-    theme,
-  } = useShop();
+  const { addProduct, decreaseProductQuantity, deleteProduct } = useCart();
+  const { products } = useProducts();
+  const { theme } = useTheme();
 
   function decrease() {
     const { quantity } = getProduct()[0];
@@ -50,8 +48,9 @@ function ProductDetails() {
           category,
           quantity,
         } = product;
+
         return (
-          <Container theme={theme}>
+          <Container key={productId} theme={theme}>
             <ProductImage>
               <Image src={productImage} />
             </ProductImage>

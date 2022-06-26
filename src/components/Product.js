@@ -4,10 +4,11 @@ import styled from "styled-components";
 import { useText } from "../hooks/useText";
 import { BsArrowRightShort } from "react-icons/bs";
 import { IconWrapper } from "../styled-component/common";
-import { useShop } from "../context/shoppingContext";
 import { AiFillHeart } from "react-icons/ai";
 import SingleIcon from "../components/SingleIcon";
 import { showToastHandler } from "../utils/toastHandler";
+import { useTheme } from "../hooks/useTheme";
+import { useFavourite } from "../hooks/useFavourite";
 
 function Product(props) {
   const {
@@ -23,7 +24,8 @@ function Product(props) {
 
   const shortedText = useText(productTitle);
   const [isShortedText, setIsShortedText] = useState(true);
-  const { theme, isLightTheme, addFavourite, favourite } = useShop();
+  const { addFavourite, favourite } = useFavourite();
+  const { theme, isLightTheme } = useTheme();
 
   return (
     <ProductContainer theme={theme}>

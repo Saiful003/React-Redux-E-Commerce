@@ -8,18 +8,14 @@ import { MdOutlineLightMode } from "react-icons/md";
 import { BsSearch, BsX } from "react-icons/bs";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { IconContext } from "react-icons/lib";
-import { useShop } from "../context/shoppingContext";
+import { useCart } from "../hooks/useCart";
+import { useTheme } from "../hooks/useTheme";
+import { useInput } from "../hooks/useInput";
 
 function Header() {
-  const {
-    cart,
-    inputValue: value,
-    handleInputChange,
-    clearSerachField,
-    switchThemeHandler,
-    isLightTheme,
-    theme,
-  } = useShop();
+  const { cart } = useCart();
+  const { isLightTheme, theme, switchThemeHandler } = useTheme();
+  const { inputValue: value, handleInputChange, clearSerachField } = useInput();
 
   return (
     <HeaderContainer theme={theme}>

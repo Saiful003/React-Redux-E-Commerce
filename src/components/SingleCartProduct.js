@@ -5,17 +5,19 @@ import { HiOutlineMinusSm } from "react-icons/hi";
 import { AiOutlineDelete } from "react-icons/ai";
 import { IconContext } from "react-icons/lib";
 import { Linked } from "../styled-component/common";
-import { useShop } from "../context/shoppingContext";
 import { showToastHandler } from "../utils/toastHandler";
+import { useCart } from "../hooks/useCart";
+import { useTheme } from "../hooks/useTheme";
 
 function SingleCartProduct(props) {
+  const { theme } = useTheme();
   const {
     addProduct,
     decreaseProductQuantity,
     deleteProduct,
     getIndividualPrice,
-    theme,
-  } = useShop();
+  } = useCart();
+
   const { productId, productImage, productTitle, quantity } = props;
   return (
     <Container theme={theme}>
@@ -40,7 +42,7 @@ function SingleCartProduct(props) {
                     type: "error",
                   });
                 } else {
-                  decreaseProductQuantity(productId);
+                  decreaseProductQuantity(productId, false);
                 }
               }}
               icon={<HiOutlineMinusSm />}

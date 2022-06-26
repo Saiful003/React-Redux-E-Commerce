@@ -1,9 +1,12 @@
 import styled from "styled-components";
-import { useShop } from "../context/shoppingContext";
+import { useInput } from "../hooks/useInput";
+import { useProducts } from "../hooks/useProducts";
 import Product from "./Product";
 
 function Products() {
-  const { handleFilterProduct, inputValue } = useShop();
+  const { inputValue } = useInput();
+  const { handleFilterProduct } = useProducts();
+
   return (
     <>
       {handleFilterProduct().length === 0 && (
